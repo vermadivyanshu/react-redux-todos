@@ -1,0 +1,10 @@
+.todosList {
+    list-style: none;
+}
+.todosList li {
+    text-align: left;
+}
+.todosList li span {
+    margin-left: 0.2rem;
+    margin-right: 0.2rem;
+}
