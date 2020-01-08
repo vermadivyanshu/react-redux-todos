@@ -1,5 +1,7 @@
 .todosList {
     list-style: none;
+    height: 5rem;
+    overflow: scroll;
 }
 .todosList li {
     text-align: left;

@@ -3,7 +3,8 @@ import TodosList from './TodosList'
 import NewTodo from './NewTodo'
 import TodoActions from './TodoActions'
 import { connect } from 'react-redux'
-import {updateTodosStatus} from '../redux/actions/todoActions'
+import {updateTodosStatus, removeTodos} from '../redux/actions/todoActions'
+import '../styles/todos.css'
 
 class Todos extends React.Component {
     constructor(props) {
@@ -21,7 +22,7 @@ class Todos extends React.Component {
     }
     addOrRemoveSelectedIds = (selectedId) => {
         var newSelectedIds = []
-        if(this.state.selectedIds.indexOf(selectedId) == -1) {
+        if(this.state.selectedIds.indexOf(selectedId) === -1) {
             newSelectedIds = [...this.state.selectedIds, selectedId];
         }
         else {
@@ -30,25 +31,24 @@ class Todos extends React.Component {
         this.setState((prevState) => { return {...prevState, selectedIds: newSelectedIds} })
     }
     
-    markComplete = (event) => {
+    toggleTodoStatus = (event) => {
         event.preventDefault()
-        this.props.updateTodosStatus(this.state.selectedIds, 1)
+        this.props.updateTodosStatus(this.state.selectedIds)
         this.setState({selectedIds: []})
         // this.updateStatus(1)
     }
-    markNotComplete = (event) => {
-        event.preventDefault()
-        this.props.updateTodosStatus(this.state.selectedIds, 0)
+    removeTodos = (event) => {
+        event.preventDefault();
+        this.props.removeTodos(this.state.selectedIds)
         this.setState({selectedIds: []})
-        // this.updateStatus(0)
     }
     
     render() {
         return(
             <div className="todos">
                 <NewTodo createTodo={this.createTodo} />
-                <TodosList todos={this.state.todos} selectedIds={this.state.selectedIds} handleChange={this.addOrRemoveSelectedIds} />
-                <TodoActions markComplete={this.markComplete} markNotComplete={this.markNotComplete} getIncompleteCount={this.getIncompleteCount} />
+                <TodosList selectedIds={this.state.selectedIds} handleChange={this.addOrRemoveSelectedIds} />
+                <TodoActions toggleTodoStatus={this.toggleTodoStatus} removeTodos={this.removeTodos} getIncompleteCount={this.getIncompleteCount} />
             </div>
         )
     }
@@ -56,5 +56,5 @@ class Todos extends React.Component {
 
 export default connect(
     null,
-    {updateTodosStatus}
+    {updateTodosStatus, removeTodos}
 )(Todos)

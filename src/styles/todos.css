@@ -1,0 +1,6 @@
+.todos {
+    width: 60%;
+    height: 50%;
+    position: absolute;
+    transform: translate(40%, 50%);
+}

@@ -1,9 +1,5 @@
-import { ADD_TODO, UPDATE_STATUS } from '../actions/todoActions'
+import { ADD_TODO, UPDATE_STATUS, REMOVE_TODOS } from '../actions/todoActions'
 import { combineReducers } from 'redux'
-
-const initialState = {
-    todos: []
-}
 
 function todos(state = [], action) {
     switch(action.type) {
@@ -12,11 +8,15 @@ function todos(state = [], action) {
 
         case UPDATE_STATUS:
             return state.map((todo) => {
-                    if(action.ids.indexOf(todo.id) != -1) {
-                        return { ...todo, status: action.status};
+                    if(action.ids.indexOf(todo.id) !== -1) {
+                        return { ...todo, status: todo.status === 0 ? 1 : 0 };
                     }
                     return todo;
                 })
+        case REMOVE_TODOS:
+            return state.filter((todo) => {
+              return action.ids.indexOf(todo.id) === -1
+            })
             
         default:
             return state

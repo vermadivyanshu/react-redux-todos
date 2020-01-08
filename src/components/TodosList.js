@@ -12,6 +12,7 @@ function TodosList({todos, selectedIds, handleChange}) {
 }
 
 const mapStateToProps = state => {
+    console.log(state);
     const todos = state.todos.length > 0 ? state.todos : []
     return { todos };
 }
